@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b1b"><meta name="description" content="VortexLyrics Studio — редактор синхронизации текстов.">
+<title>VortexLyrics Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="editor.css">
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="mark">VL</span><span>VORTEX<span class="muted">LYRICS</span></span></a>
+    <div class="project-name"><span class="status-dot"></span><span id="projectTitle">Новый проект</span></div>
+    <div class="top-actions"><button class="icon-btn" id="saveDraft" title="Сохранить черновик" aria-label="Сохранить черновик">↧</button><button class="export-btn" id="exportBtn">Экспорт <span>↗</span></button></div>
+  </header>
+
+  <main class="workspace">
+    <section class="media-panel panel">
+      <div class="panel-heading"><div><span class="eyebrow">MEDIA</span><h1>Твоя песня</h1></div><span class="file-type" id="fileType">АУДИО НЕ ВЫБРАНО</span></div>
+      <label class="dropzone" id="dropzone" for="audioInput">
+        <input id="audioInput" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac">
+        <span class="upload-icon">↑</span><strong>Добавить аудио</strong><span>Перетащи файл сюда или выбери на устройстве</span><small>MP3 · WAV · OGG · M4A · FLAC</small>
+      </label>
+      <div class="track-info hidden" id="trackInfo"><div class="cover-art">♫</div><div class="track-meta"><strong id="trackName">Название трека</strong><span id="trackDuration">00:00</span></div><button class="replace-btn" id="replaceAudio">Заменить</button></div>
+      <div class="player hidden" id="player">
+        <div class="player-line"><span id="currentTime">00:00</span><input id="seekBar" type="range" min="0" max="1000" value="0"><span id="totalTime">00:00</span></div>
+        <div class="player-controls"><button class="speed-btn" id="speedBtn">1×</button><button class="skip-btn" id="backBtn">↶ 5</button><button class="play-btn" id="playBtn" aria-label="Воспроизвести">▶</button><button class="skip-btn" id="forwardBtn">5 ↷</button><button class="volume-btn" id="muteBtn">◖))</button></div>
+      </div>
+      <audio id="audio" preload="metadata"></audio>
+    </section>
+
+    <section class="lyrics-panel panel">
+      <div class="panel-heading lyrics-heading"><div><span class="eyebrow">LYRICS</span><h2>Текст и синхронизация</h2></div><button class="add-line" id="addLine">＋ <span>Строка</span></button></div>
+      <div class="notice" id="recognitionNotice"><span>✦</span><div><strong>Автосоздание текста подключим следующим этапом</strong><p>Сейчас можно подготовить и синхронизировать текст вручную. Для распознавания вокала и точных таймингов потребуется подключить сервер обработки аудио.</p></div></div>
+      <div class="lyrics-tools"><span id="lineCount">0 строк</span><div><button class="tool-btn active" id="lineMode">По строкам</button><button class="tool-btn" id="wordMode">По словам</button></div></div>
+      <div class="empty-lyrics" id="emptyLyrics"><div class="empty-symbol">♪</div><strong>Здесь будет твой текст</strong><span>Добавь первую строку, затем назначь ей время на шкале.</span><button class="primary-btn" id="firstLine">＋ Добавить первую строку</button></div>
+      <div class="lyrics-list" id="lyricsList"></div>
+      <div class="add-bottom"><button class="add-line wide" id="addLineBottom">＋ Добавить строку</button></div>
+    </section>
+
+    <section class="timeline-panel panel">
+      <div class="timeline-head"><div><span class="eyebrow">TIMELINE</span><h2>Временная шкала</h2></div><span class="timeline-hint">Выбери строку и нажми «Поставить время»</span></div>
+      <div class="timeline-ruler" id="timelineRuler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+      <div class="wave-wrap" id="waveWrap"><canvas id="waveCanvas" height="92"></canvas><div class="playhead" id="playhead"></div><div class="wave-empty" id="waveEmpty">Загрузи аудио, чтобы увидеть волну</div></div>
+      <div class="timeline-footer"><span id="selectedTime">Выбрана позиция: 00:00.00</span><button class="set-time-btn" id="setTimeBtn">◎ Поставить время</button></div>
+    </section>
+  </main>
+  <footer class="bottom-note"><span>VORTEXLYRICS STUDIO</span><span>Черновик сохраняется в этом браузере</span></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="editor.js"></script>
+</body></html>
