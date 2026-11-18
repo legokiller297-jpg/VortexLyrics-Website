@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b1b"><meta name="description" content="VortexLyrics Studio — пословный редактор синхронизации LRC.">
+<title>VortexLyrics Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="editor.css">
+</head>
+<body>
+<div class="app-shell">
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="mark">VL</span><span>VORTEX<span class="muted">LYRICS</span></span></a>
+  <div class="project-name"><i class="status-dot"></i><span id="projectTitle">Новый проект</span><small id="saveState">Не сохранено</small></div>
+  <div class="top-actions"><button class="icon-btn" id="undoBtn" aria-label="Отменить" title="Отменить">↶</button><button class="icon-btn" id="redoBtn" aria-label="Повторить" title="Повторить">↷</button><button class="export-btn" id="exportBtn">Экспорт LRC <span>↗</span></button></div>
+</header>
+<main class="studio">
+  <section class="preview panel">
+    <div class="section-kicker">ПРЕДПРОСЛУШИВАНИЕ</div>
+    <div class="preview-screen"><div class="preview-glow"></div><span class="preview-label">VORTEXLYRICS</span><div class="preview-lyrics"><span id="previewPrevious"></span><strong id="previewCurrent">Твой текст появится здесь</strong><span id="previewNext"></span></div><span class="preview-time" id="previewTime">00:00.00</span></div>
+    <div class="transport"><span id="currentTime">00:00.00</span><button class="transport-btn" id="backBtn" title="Назад на 5 секунд">−5</button><button class="play-btn" id="playBtn" aria-label="Воспроизвести">▶</button><button class="transport-btn" id="forwardBtn" title="Вперёд на 5 секунд">+5</button><span id="totalTime">00:00</span></div>
+  </section>
+
+  <section class="media panel">
+    <div class="section-title"><div><div class="section-kicker">ПРОЕКТ</div><h1>Аудио и текст</h1></div><button class="subtle-btn" id="replaceAudio">Заменить аудио</button></div>
+    <label class="upload" id="dropzone" for="audioInput"><input id="audioInput" type="file" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac"><span class="upload-icon">↑</span><span><b>Загрузить песню</b><small>MP3 · WAV · OGG · M4A · FLAC</small></span></label>
+    <div class="track-meta hidden" id="trackInfo"><div class="cover">♫</div><div class="track-copy"><b id="trackName">Трек</b><small id="trackDuration">00:00</small></div></div>
+    <audio id="audio" preload="metadata"></audio>
+    <div class="text-entry"><label for="lyricsInput">ТЕКСТ ПЕСНИ</label><textarea id="lyricsInput" rows="4" placeholder="Вставь сюда текст песни. Каждую строку — с новой строки…"></textarea><div class="text-actions"><span>Можно вставить сразу весь текст</span><button class="primary-btn" id="buildTimeline">Разложить слова на таймлайне</button></div></div>
+    <div class="notice"><span>✦</span><p><b>Черновая раскладка</b><br>Слова распределяются по времени предварительно. Для точных таймингов позже подключим автоматическое распознавание и аудиовыравнивание.</p></div>
+  </section>
+
+  <section class="timeline panel">
+    <div class="timeline-top"><div><div class="section-kicker">МОНТАЖ</div><h2>Таймлайн</h2></div><div class="timeline-actions"><button class="subtle-btn" id="zoomOut">−</button><span id="zoomLabel">1.0×</span><button class="subtle-btn" id="zoomIn">＋</button></div></div>
+    <div class="timeline-scroll" id="timelineScroll"><div class="timeline-inner" id="timelineInner">
+      <div class="ruler" id="ruler"></div>
+      <div class="track-row audio-track"><div class="track-label">♫ <span>АУДИО</span></div><div class="track-content" id="audioTrack"><canvas id="waveCanvas"></canvas></div></div>
+      <div class="track-row words-track"><div class="track-label">T <span>ТЕКСТ</span></div><div class="track-content word-track-content" id="wordTrack"><div class="empty-track">Сначала добавь текст песни</div></div></div>
+      <div class="timeline-cursor" id="timelineCursor"><div></div></div>
+    </div></div>
+    <div class="timeline-bottom"><span>Нажми на слово, чтобы выбрать. Перетаскивай блок, чтобы изменить время.</span><button class="subtle-btn" id="fitTimeline">Вся песня</button></div>
+    <div class="selected-word hidden" id="selectedWordPanel"><div class="selected-word-head"><b>Выбранное слово</b><button id="deleteWord" class="delete-btn">Удалить</button></div><input id="selectedWordText" type="text" aria-label="Текст слова"><div class="time-fields"><label>Начало <input id="wordStart" type="number" min="0" step="0.01"></label><label>Длительность <input id="wordDuration" type="number" min="0.05" step="0.01"></label></div></div>
+  </section>
+</main>
+<footer class="footer"><span>VORTEXLYRICS STUDIO</span><span>Черновик автоматически сохраняется в этом браузере</span></footer>
+</div>
+<div class="mobile-tools"><button id="mobilePlay">▶<small>Пуск</small></button><button id="mobileText">T<small>Текст</small></button><button id="mobileFit">↔<small>Вся песня</small></button><button id="mobileExport">⇧<small>Экспорт</small></button></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="editor.js"></script>
+</body></html>
